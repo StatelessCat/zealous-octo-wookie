@@ -11975,9 +11975,7 @@ module.exports = Array.isArray || function (arr) {
 });</script>
 <script>
   window.addEventListener('WebComponentsReady', function() {
-    
-    page.base('http://statelesscat.github.io/zealous-octo-wookie');
-    
+
     // We use Page.js for routing. This is a Micro
     // client-side router inspired by the Express router
     // More info: https://visionmedia.github.io/page.js/
@@ -12004,7 +12002,7 @@ module.exports = Array.isArray || function (arr) {
 
     // add #! before urls
     page({
-      hashbang: false
+      hashbang: true
     });
 
   });
