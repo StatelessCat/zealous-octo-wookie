@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <html lang="">
 
 <head>
+  <base href="http://localhost:5000/">
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -78,6 +79,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <a data-route="home" href="/" on-click="onDataRouteClick">
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
+          </a>
+
+          <a data-route="shadowdomhyperlinks" href="/shadowdomhyperlinks" on-click="onDataRouteClick">
+            <iron-icon icon="info"></iron-icon>
+            <span>Shadow DOM Hyperlinks</span>
           </a>
 
           <a data-route="users" href="/users" on-click="onDataRouteClick">
@@ -153,6 +159,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
 
             </section>
+
+            <section data-route="shadowdomhyperlinks">
+              <paper-material elevation="1">
+                <shadow-dom-hyperlinks></shadow-dom-hyperlinks>
+              </paper-material>
+            </section>
+
 
             <section data-route="users">
               <paper-material elevation="1">

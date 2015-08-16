@@ -1,0 +1,26 @@
+<dom-module id="shadow-dom-hyperlinks">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+    <h1 class="paper-font-display1"><span>Hello StatelessCat</span></h1>
+    <paper-input label="/users/" auto-validate pattern="/users/[a-zA-Z]*" char-counter value="{{link}}" error-message="/users/<name> please"></paper-input>
+    <a href="{{link}}">{{link}}</a>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'shadow-dom-hyperlinks',
+        properties: {
+          link: {
+            type: String
+          }
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
