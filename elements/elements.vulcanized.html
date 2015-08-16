@@ -11993,6 +11993,7 @@ module.exports = Array.isArray || function (arr) {
     });
 
     page('/users/:name', function (data) {
+      console.log('page(""/users/XXX")');
       app.route = 'user-info';
       app.params = data.params;
     });
