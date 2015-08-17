@@ -11051,6 +11051,11 @@ is separate from validation, and `allowed-pattern` does not affect how the input
 
 
 
+<script>/*
+qs v.0.3.9 - Simple query string tokens parser
+06-06-2015
+*/
+function QS(a){function b(a){return null!==a?isNaN(a)?"true"===a?!0:"false"===a?!1:"undefined"===a?void 0:"null"===a?null:a:Number(a):void 0}function c(){var a="",b=d.url.substr(0,d.url.indexOf("?")>0&&d.url.indexOf("?")||d.url.length),c=d.url.indexOf("#")>0&&d.url.substr(d.url.indexOf("#"));arrTokens=[];for(var e in d.tokens)d.tokens.hasOwnProperty(e)&&arrTokens.push(encodeURIComponent(e)+(d.tokens[e]?"="+encodeURIComponent(d.tokens[e]):""));a=b,a+=arrTokens.length>0?"?"+arrTokens.join("&"):"",a+=c&&c.length>0?c:"",d.url=a}var d={version:QS.version,url:a||window&&window.location.href,tokens:{},has:function(a){return d.tokens.hasOwnProperty(a)},get:function(a){return d.tokens[a]},getAll:function(){return d.tokens},set:function(a,b){return d.tokens[a]=b,c(),d},remove:function(a){return delete d.tokens[a],c(),d},go:function(){document.location.href=d.url},log:function(){console.log(d.tokens)}};return QS.version="0.3.9",function(){var a,e=/[?&]([^=&#]+)(?:=([^&#]+))?/g;for(a=e.exec(d.url);null!==a;)d.tokens[decodeURIComponent(a[1])]=a[2]?b(decodeURIComponent(a[2])):null,a=e.exec(d.url);c()}(),d}</script>
 <script>!function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),f.page=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 (function (process){
   /* globals require, module */
@@ -11978,6 +11983,8 @@ module.exports = Array.isArray || function (arr) {
 });
 </script>
 <script>
+  /* global QS */
+
   window.addEventListener('WebComponentsReady', function() {
 
     // We use Page.js for routing. This is a Micro
@@ -11989,6 +11996,19 @@ module.exports = Array.isArray || function (arr) {
 
     page('/shadowdomhyperlinks', function () {
       app.route = 'shadowdomhyperlinks';
+    });
+
+    page('/urlconsumer', function (ctx) {
+      // get the 'url' field in the querystring (note the url field below)
+      // http://localhost:5000/#!/urlconsumer/?url=https%3A%2F%2Fwww.google.com%2F%23q%3Dschrodingers%2527cat
+      //                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      app.params = {'url': QS(ctx.path).get('url')};
+      app.route = 'urlconsumer';
+    });
+
+    page('/urlconsumer', function () {
+      app.route = 'urlconsumer';
     });
 
     page('/users', function () {
@@ -16042,8 +16062,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </style>
   <template>
     <h1 class="paper-font-display1"><span>Hello StatelessCat</span></h1>
-    <paper-input label="/users/" auto-validate="" pattern="/users/[a-zA-Z]*" char-counter="" value="{{link}}" error-message="/users/<name> please"></paper-input>
-    <a href="{{link}}">{{link}}</a>
+    <paper-input label="route" auto-validate="" pattern="/[a-zA-Z]*/" char-counter="" value="{{route}}" error-message="/<route>/ please"></paper-input>
+    <paper-input label="route params" auto-validate="" char-counter="" type="url" value="{{link}}" error-message="Valid URL please"></paper-input>
+    <a href="{{encodedLink}}">{{encodedLink}}</a>
   </template>
 
   <script>
@@ -16051,10 +16072,46 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer({
         is: 'shadow-dom-hyperlinks',
         properties: {
+          route: {
+            type: String,
+            value: '/urlconsumer/'
+          },
           link: {
             type: String,
-            value: '/users/statelesscat'
+            value: 'https://www.google.com/#q=schrodingers%27cat'
+          },
+          encodedLink: {
+            type: String,
+            computed: 'computeEncodedLink(route, link)'
           }
+        },
+        computeEncodedLink: function(route, link) {
+          return  route + '\?url=' + encodeURIComponent(link);
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
+<dom-module id="url-consumer" assetpath="url-consumer/">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+    <h1 class="paper-font-display1"><span>I got url: </span><span>{{_decodeURIComponent(url)}}</span></h1>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'url-consumer',
+        properties: {
+          url: String
+        },
+        _decodeURIComponent: function(url) {
+          return decodeURIComponent(url);
         }
       });
     })();

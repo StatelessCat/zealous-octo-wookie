@@ -6,8 +6,9 @@
   </style>
   <template>
     <h1 class="paper-font-display1"><span>Hello StatelessCat</span></h1>
-    <paper-input label="/users/" auto-validate pattern="/users/[a-zA-Z]*" char-counter value="{{link}}" error-message="/users/<name> please"></paper-input>
-    <a href="{{link}}">{{link}}</a>
+    <paper-input label="route" auto-validate pattern="/[a-zA-Z]*/" char-counter value="{{route}}" error-message="/<route>/ please"></paper-input>
+    <paper-input label="route params" auto-validate char-counter type="url" value="{{link}}" error-message="Valid URL please"></paper-input>
+    <a href="{{encodedLink}}">{{encodedLink}}</a>
   </template>
 
   <script>
@@ -15,10 +16,21 @@
       Polymer({
         is: 'shadow-dom-hyperlinks',
         properties: {
+          route: {
+            type: String,
+            value: '/urlconsumer/'
+          },
           link: {
             type: String,
-            value: '/users/statelesscat'
+            value: 'https://www.google.com/#q=schrodingers%27cat'
+          },
+          encodedLink: {
+            type: String,
+            computed: 'computeEncodedLink(route, link)'
           }
+        },
+        computeEncodedLink: function(route, link) {
+          return  route + '\?url=' + encodeURIComponent(link);
         }
       });
     })();

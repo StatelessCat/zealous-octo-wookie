@@ -8,8 +8,11 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
+<script src='../../bower_components/qs/dist/qs.min.js'></script>
 <script src="../../bower_components/page/page.js"></script>
 <script>
+  /* global QS */
+
   window.addEventListener('WebComponentsReady', function() {
 
     // We use Page.js for routing. This is a Micro
@@ -21,6 +24,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     page('/shadowdomhyperlinks', function () {
       app.route = 'shadowdomhyperlinks';
+    });
+
+    page('/urlconsumer', function (ctx) {
+      // get the 'url' field in the querystring (note the url field below)
+      // http://localhost:5000/#!/urlconsumer/?url=https%3A%2F%2Fwww.google.com%2F%23q%3Dschrodingers%2527cat
+      //                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+      app.params = {'url': QS(ctx.path).get('url')};
+      app.route = 'urlconsumer';
+    });
+
+    page('/urlconsumer', function () {
+      app.route = 'urlconsumer';
     });
 
     page('/users', function () {
