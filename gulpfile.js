@@ -24,6 +24,7 @@ var historyApiFallback = require('connect-history-api-fallback');
 var packageJson = require('./package.json');
 var crypto = require('crypto');
 var ghPages = require('gulp-gh-pages');
+var connect = require('gulp-connect');
 
 var AUTOPREFIXER_BROWSERS = [
   'ie >= 10',
@@ -270,6 +271,14 @@ gulp.task('default', ['clean'], function (cb) {
 gulp.task('deploy', function() {
   return gulp.src('./dist/**/*')
     .pipe(ghPages());
+});
+
+// a Development Web Server
+gulp.task('simpleserver', function() {
+  connect.server({
+    root: ['.tmp', 'dist'],
+    port: 8080,
+  });
 });
 
 // Load tasks for web-component-tester
