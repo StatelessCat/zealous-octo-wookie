@@ -6,7 +6,8 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
-    "page": "https://github.com/bquarks/page.js.git#3d319c8625fb725b7c03261c116b63e931ebcebb"
+    "page": "https://github.com/bquarks/page.js.git#3d319c8625fb725b7c03261c116b63e931ebcebb",
+    "qs": "~0.3.9"
   },
   "devDependencies": {
     "web-component-tester": "*",

@@ -1,0 +1,25 @@
+<dom-module id="url-consumer">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+    <h1 class="paper-font-display1"><span>I got url: </span><span>{{_decodeURIComponent(url)}}</span></h1>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'url-consumer',
+        properties: {
+          url: String
+        },
+        _decodeURIComponent: function(url) {
+          return decodeURIComponent(url);
+        }
+      });
+    })();
+  </script>
+
+</dom-module>

@@ -88,6 +88,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <span>Shadow DOM Hyperlinks</span>
           </a>
 
+          <a data-route="urlconsumer" href="/urlconsumer" on-click="onDataRouteClick">
+            <iron-icon icon="info"></iron-icon>
+            <span>Url Consumer</span>
+          </a>
+
           <a data-route="users" href="/users" on-click="onDataRouteClick">
             <iron-icon icon="info"></iron-icon>
             <span>Users</span>
@@ -168,6 +173,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-material>
             </section>
 
+            <section data-route="urlconsumer">
+              <paper-material elevation="1">
+                <url-consumer url="{{params.url}}"></url-consumer>
+              </paper-material>
+            </section>
 
             <section data-route="users">
               <paper-material elevation="1">
