@@ -8,11 +8,11 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<script src="https://rawgit.com/bquarks/page.js/master/page.js"></script>
+<!-- <script src="https://rawgit.com/bquarks/page.js/master/page.js"></script> -->
+<script src="../../bower_components/page/page.js"></script>
+
 <script>
   window.addEventListener('WebComponentsReady', function() {
-    
-    // page.base('http://localhost:8080');
 
     // We use Page.js for routing. This is a Micro
     // client-side router inspired by the Express router
@@ -26,12 +26,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 
     page('/users', function () {
-      console.log('page(""/users")');
       app.route = 'users';
     });
 
     page('/users/:name', function (data) {
-      console.log('page(""/users/XXX")');
       app.route = 'user-info';
       app.params = data.params;
     });
