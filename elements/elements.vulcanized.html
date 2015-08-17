@@ -11601,8 +11601,11 @@ is separate from validation, and `allowed-pattern` does not affect how the input
 
 
     // ensure link
-    var el = e.target;
-    while (el && 'A' !== el.nodeName) el = el.parentNode;
+    var i = 0,
+       path = e.path || false,
+       el = path ? e.path[i] : e.target;
+       
+    while (el && 'A' !== el.nodeName) el = path ? e.path[++i] : el.parentElement;
     if (!el || 'A' !== el.nodeName) return;
 
 
@@ -11972,9 +11975,12 @@ module.exports = Array.isArray || function (arr) {
 };
 
 },{}]},{},[1])(1)
-});</script>
+});
+</script>
 <script>
   window.addEventListener('WebComponentsReady', function() {
+    
+    // page.base('http://localhost:8080');
 
     // We use Page.js for routing. This is a Micro
     // client-side router inspired by the Express router
@@ -12004,7 +12010,7 @@ module.exports = Array.isArray || function (arr) {
 
     // add #! before urls
     page({
-      hashbang: true
+      hashbang: false
     });
 
   });
